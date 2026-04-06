@@ -211,7 +211,7 @@
     GOTO game_loop
 
     :draw_hud
-    DRAWTEXT "Score: $score" #fff 10 10 14
+    DRAWTEXT "message" color x y [fontsize]
     RETURN
 
 =========================================================
