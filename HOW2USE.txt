@@ -1,0 +1,63 @@
+=========================================================
+          QUK PROGRAMMING LANGUAGE - USER GUIDE          
+                    Version 3.0 Standard                 
+=========================================================
+
+Welcome to QUK! QUK is a lightning-fast, easy-to-read scripting 
+language designed for creating visual programs, alerts, and 
+smooth UI animations.
+
+Save your files with the ".quk" extension and drag them onto 
+the QUK Player to run them!
+
+---------------------------------------------------------
+1. WINDOW & UI COMMANDS
+---------------------------------------------------------
+Title "Your Text"     -> Changes the name at the top of the window.
+Window 800 600        -> Resizes the window to Width x Height.
+Maximize              -> Makes the window fullscreen.
+Minimize              -> Hides the window to the taskbar.
+
+---------------------------------------------------------
+2. TEXT & GRAPHICS COMMANDS
+---------------------------------------------------------
+Text "Hello"          -> Displays large white text in the center.
+Text "Alert" #ff0000  -> Displays text AND changes its color to Red.
+ClearText             -> Removes all text from the screen.
+Bg #00ff00            -> Instantly changes the background color.
+RandomBg              -> Picks a completely random background color.
+Msg (clr = #000000 smth = #ffffff) loop 
+                      -> The signature QUK command! Smoothly fades 
+                         the background between two hex colors. Add
+                         'loop' at the end to make it bounce forever.
+
+---------------------------------------------------------
+3. AUDIO & TIMING COMMANDS
+---------------------------------------------------------
+Sound 1000 500        -> Plays a system beep. (Frequency Hz) (Duration ms).
+Wait 2                -> Pauses the script for a number of seconds.
+
+---------------------------------------------------------
+4. SYSTEM COMMANDS
+---------------------------------------------------------
+Popup "Virus found!"  -> Opens a native Windows alert box.
+Print "Testing 123"   -> Prints a message to the hidden developer console.
+Exit                  -> Instantly closes the program.
+//                    -> Put two slashes to write a comment. The engine ignores this.
+
+---------------------------------------------------------
+EXAMPLE SCRIPT: (Copy this into a test.quk file!)
+---------------------------------------------------------
+// My First QUK Virus Prank
+Window 600 400
+Title "CRITICAL ERROR"
+Bg #ff0000
+Text "SYSTEM FAILURE" #ffffff
+Sound 2000 1000
+Wait 2
+Popup "Just kidding, built with QUK!"
+RandomBg
+Text "Have a good day!" #00ff00
+Wait 3
+Exit
+=========================================================

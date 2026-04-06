@@ -1,0 +1,34 @@
+// --- QUK 3.0 SYSTEM STARTUP ---
+
+// Setup the window
+Title "QUK OS v3.0"
+Window 800 500
+Bg #000000
+
+// Start the sequence
+Text "INITIALIZING QUK ENGINE..." #00ff00
+Sound 800 200
+Wait 1.5
+
+Text "LOADING STANDARD LIBRARIES..." #00ff00
+Sound 1000 200
+Wait 1
+
+Text "ACCESS GRANTED" #ffffff
+Sound 1500 500
+Wait 1
+
+// Clear the screen for the main effect
+ClearText
+Print "Beginning smooth color transition..."
+
+// Your custom command: Start the smooth black-to-white fade
+Msg (clr = #000000 smth = #ffffff) loop
+
+// Add some floating text over the fade
+Text "QUK PLAYER ACTIVE" #000000
+Wait 5
+
+// Final popup to show off the system commands
+Popup "The .quk script has finished the intro sequence!"
+Exit
