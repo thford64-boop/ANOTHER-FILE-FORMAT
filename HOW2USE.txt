@@ -1,63 +1,57 @@
 =========================================================
-          QUK PROGRAMMING LANGUAGE - USER GUIDE          
-                    Version 3.0 Standard                 
+            QUK 6.0 - OFFICIAL HOW 2 USE (H2U)
 =========================================================
 
-Welcome to QUK! QUK is a lightning-fast, easy-to-read scripting 
-language designed for creating visual programs, alerts, and 
-smooth UI animations.
-
-Save your files with the ".quk" extension and drag them onto 
-the QUK Player to run them!
+QUK (pronounced 'Quick') is a powerful, line-based language 
+designed for games, tools, and visual scripts.
 
 ---------------------------------------------------------
-1. WINDOW & UI COMMANDS
+1. GETTING STARTED
 ---------------------------------------------------------
-Title "Your Text"     -> Changes the name at the top of the window.
-Window 800 600        -> Resizes the window to Width x Height.
-Maximize              -> Makes the window fullscreen.
-Minimize              -> Hides the window to the taskbar.
+* Create a text file and rename the extension to .quk
+* Drag the .quk file onto the quk_engine.exe to run it.
+* Comments start with // and are ignored by the engine.
 
 ---------------------------------------------------------
-2. TEXT & GRAPHICS COMMANDS
+2. THE VARIABLE SYSTEM
 ---------------------------------------------------------
-Text "Hello"          -> Displays large white text in the center.
-Text "Alert" #ff0000  -> Displays text AND changes its color to Red.
-ClearText             -> Removes all text from the screen.
-Bg #00ff00            -> Instantly changes the background color.
-RandomBg              -> Picks a completely random background color.
-Msg (clr = #000000 smth = #ffffff) loop 
-                      -> The signature QUK command! Smoothly fades 
-                         the background between two hex colors. Add
-                         'loop' at the end to make it bounce forever.
+To save data, use SET. To use that data later, put a $ 
+in front of the name.
+   SET score 0
+   TEXT "Your score is $score" #ffffff 100 100
 
 ---------------------------------------------------------
-3. AUDIO & TIMING COMMANDS
+3. LOGIC & FLOW (The Brain)
 ---------------------------------------------------------
-Sound 1000 500        -> Plays a system beep. (Frequency Hz) (Duration ms).
-Wait 2                -> Pauses the script for a number of seconds.
+QUK uses "Labels" and "Gotos" to move around.
+   :MyLoop
+   ADD score 1
+   GOTO MyLoop     <-- This creates an infinite loop!
+
+Use IF commands to check conditions:
+   IFEQ $score 10  <-- Only runs the next line if score is 10
+   POPUP "You reached 10 points!"
 
 ---------------------------------------------------------
-4. SYSTEM COMMANDS
+4. TOP 10 COMMANDS TO KNOW
 ---------------------------------------------------------
-Popup "Virus found!"  -> Opens a native Windows alert box.
-Print "Testing 123"   -> Prints a message to the hidden developer console.
-Exit                  -> Instantly closes the program.
-//                    -> Put two slashes to write a comment. The engine ignores this.
+1. BG [color]         - Change the window background color.
+2. DRAWBOX [id] [x] [y] [size] [color] - Create a square.
+3. MOVE [id] [x] [y]  - Move a box or circle.
+4. RAND [v] [min] [max]- Generate a random number.
+5. WAIT [sec]         - Pause the script.
+6. WAITCLICK          - Wait for a mouse click to continue.
+7. SOUND [hz] [ms]    - Play a beep sound.
+8. POPUP "msg"        - Show a Windows alert box.
+9. FLASH              - Make the screen flash white.
+10. EXIT              - Close the program instantly.
 
 ---------------------------------------------------------
-EXAMPLE SCRIPT: (Copy this into a test.quk file!)
+5. PRO MATH
 ---------------------------------------------------------
-// My First QUK Virus Prank
-Window 600 400
-Title "CRITICAL ERROR"
-Bg #ff0000
-Text "SYSTEM FAILURE" #ffffff
-Sound 2000 1000
-Wait 2
-Popup "Just kidding, built with QUK!"
-RandomBg
-Text "Have a good day!" #00ff00
-Wait 3
-Exit
+QUK supports ADD, SUB, MULT, DIV, POW, and SQRT. 
+Example: MULT score 2 (Doubles the score variable).
+
+=========================================================
+      QUK: Coding at the Speed of Light. v6.0 PRO
 =========================================================

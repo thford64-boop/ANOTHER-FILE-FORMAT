@@ -1,0 +1,61 @@
+// --- QUK BOSS BATTLE v1.0 ---
+Title "QUK: THE RED RECTANGLE BOSS"
+Bg #050505
+Set player_hp 100
+Set boss_hp 50
+Set wins 0
+
+:StartMenu
+Clear
+DrawText "QUK BOSS BATTLE" #ffffff 350 100
+DrawText "Your HP: $player_hp | Boss HP: $boss_hp" #00ff00 350 150
+DrawText "CLICK TO ATTACK!" #ffff00 350 400
+DrawBox boss 325 200 50 #ff0000
+WaitClick
+
+:BattleLoop
+// Player Attacks
+Rand damage 5 15
+Sub boss_hp $damage
+Sound 1000 100
+Flash
+Text "You hit the boss for $damage damage!" #ffffff
+
+// Check if Boss is dead
+IfGt 1 $boss_hp
+  Goto Victory
+
+// Boss Counter-Attacks
+DrawText "BOSS IS CHARGING..." #ff0000 350 300
+Wait 0.5
+Rand boss_dmg 10 20
+Sub player_hp $boss_dmg
+Sound 400 300
+Move boss 20 0
+Wait 0.1
+Move boss -20 0
+
+// Check if Player is dead
+IfGt 1 $player_hp
+  Goto GameOver
+
+DrawText "The Boss hit you for $boss_dmg!" #ff0000 350 350
+Wait 1
+Goto StartMenu
+
+:Victory
+Clear
+Bg #00ff00
+DrawText "VICTORY!" #000000 350 200
+DrawText "The Red Rectangle was destroyed." #000000 350 250
+Sound 1500 500
+Popup "You won with $player_hp HP left!"
+Exit
+
+:GameOver
+Clear
+Bg #ff0000
+DrawText "YOU DIED" #ffffff 350 200
+Sound 200 1000
+Popup "The Boss defeated you. Try again!"
+Exit
