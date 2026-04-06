@@ -312,7 +312,7 @@
     DRAWLINE id x1 y1 x2 y2 color [width]
     DRAWPOLY id color x1 y1 x2 y2 x3 y3 ...
     DRAWTEXT "msg" color x y [fontsize]
-    DRAWLABEL id "msg" color x y [fontsize]
+    DRAWLABEL id x y #color "text" [fontsize]
 
   Clearing:
     CLEAR                 Delete everything on canvas
