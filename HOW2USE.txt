@@ -1,57 +1,766 @@
 =========================================================
-            QUK 6.0 - OFFICIAL HOW 2 USE (H2U)
+        QUK CENTURION PRO v7.0 - OFFICIAL HOW 2 USE
+                 The Complete Reference Guide
+=========================================================
+  "Coding at the Speed of Light" — Now with 500+ commands
 =========================================================
 
-QUK (pronounced 'Quick') is a powerful, line-based language 
-designed for games, tools, and visual scripts.
-
 ---------------------------------------------------------
-1. GETTING STARTED
+  WHAT'S NEW IN v7.0
 ---------------------------------------------------------
-* Create a text file and rename the extension to .quk
-* Drag the .quk file onto the quk_engine.exe to run it.
-* Comments start with // and are ignored by the engine.
-
----------------------------------------------------------
-2. THE VARIABLE SYSTEM
----------------------------------------------------------
-To save data, use SET. To use that data later, put a $ 
-in front of the name.
-   SET score 0
-   TEXT "Your score is $score" #ffffff 100 100
-
----------------------------------------------------------
-3. LOGIC & FLOW (The Brain)
----------------------------------------------------------
-QUK uses "Labels" and "Gotos" to move around.
-   :MyLoop
-   ADD score 1
-   GOTO MyLoop     <-- This creates an infinite loop!
-
-Use IF commands to check conditions:
-   IFEQ $score 10  <-- Only runs the next line if score is 10
-   POPUP "You reached 10 points!"
-
----------------------------------------------------------
-4. TOP 10 COMMANDS TO KNOW
----------------------------------------------------------
-1. BG [color]         - Change the window background color.
-2. DRAWBOX [id] [x] [y] [size] [color] - Create a square.
-3. MOVE [id] [x] [y]  - Move a box or circle.
-4. RAND [v] [min] [max]- Generate a random number.
-5. WAIT [sec]         - Pause the script.
-6. WAITCLICK          - Wait for a mouse click to continue.
-7. SOUND [hz] [ms]    - Play a beep sound.
-8. POPUP "msg"        - Show a Windows alert box.
-9. FLASH              - Make the screen flash white.
-10. EXIT              - Close the program instantly.
-
----------------------------------------------------------
-5. PRO MATH
----------------------------------------------------------
-QUK supports ADD, SUB, MULT, DIV, POW, and SQRT. 
-Example: MULT score 2 (Doubles the score variable).
+  * GETKEY / IFKEY / IFKEYPRESSED — real-time input
+  * KEYDOWN — check if a key is held this frame
+  * WAITKEY — block until any key pressed
+  * Arrays (ARRAYNEW, ARRAYPUSH, ARRAYGET, etc.)
+  * Tweening / animation (TWEEN, TWEENDONE)
+  * Particle effects (BURST, STREAM)
+  * Timers (TIMER, CANCELTIMER)
+  * Collision detection (COLLIDE, COLLIDECIRCLE)
+  * File I/O (FILEREAD, FILEWRITE, FILELINES)
+  * Save/Load system (SAVE, LOAD, SAVEVAR, LOADVAR)
+  * Color utilities (RGB2HEX, LERPCOLOR, HSV2HEX)
+  * Subroutines (CALL / RETURN)
+  * MOVETO, GETPOS, SETPOS, RECOLOR, HIDE, SHOW
+  * Camera (CAMPOS, CAMZOOM)
+  * Debug tools (DEBUGON, DUMPVARS, ASSERT)
+  * 30+ new math functions
+  * Cross-platform (no more Windows-only crash!)
 
 =========================================================
-      QUK: Coding at the Speed of Light. v6.0 PRO
+  SECTION 1 — GETTING STARTED
+=========================================================
+
+  1. Create a text file and rename extension to .quk
+  2. Drag it onto quk_engine.exe  (or run:
+       python quk_engine.py myscript.quk )
+  3. Comments start with // or #
+  4. Commands are NOT case-sensitive (SET = set = Set)
+  5. Variables are NOT case-sensitive ($Score = $score)
+
+  Built-in variables (always available):
+    $pi         = 3.14159265358979
+    $tau        = 6.28318530717959
+    $e          = 2.71828182845905
+    $true       = 1
+    $false      = 0
+    $version    = 7.0
+    $user       = your Windows username
+    $os         = Windows / Linux / Darwin
+    $canvas_w   = canvas width in pixels
+    $canvas_h   = canvas height in pixels
+    $fps        = current frames per second
+    $frame      = total frames rendered
+    $dt         = time since last frame (seconds)
+    $time       = total elapsed time (seconds)
+    $last_key   = last key pressed (name, e.g. "Left")
+    $last_key_code = keycode of last key pressed
+    $mouse_x    = current mouse X on canvas
+    $mouse_y    = current mouse Y on canvas
+    $mouse_clicked = 1 for one frame when clicked
+
+=========================================================
+  SECTION 2 — VARIABLES
+=========================================================
+
+  SET name value          Store a value in a variable.
+  COPY dest src           Copy one variable into another.
+  SWAP a b                Swap values of two variables.
+  TOGGLE var              Flip 0→1 or 1→0.
+
+  Examples:
+    SET score 0
+    SET name "Galactica"
+    SET speed $base_speed
+    COPY old_score score
+    SWAP temp value
+
+=========================================================
+  SECTION 3 — MATH COMMANDS
+=========================================================
+
+  Basic:
+    ADD  var amount       var = var + amount
+    SUB  var amount       var = var - amount
+    MULT var amount       var = var * amount
+    DIV  var amount       var = var / amount
+    MOD  var amount       var = var % amount (remainder)
+    POW  var exp          var = var ^ exp
+    SQRT var              var = sqrt(var)
+    ABS  var              var = |var| (absolute value)
+    NEG  var              var = -var
+    INC  var              var = var + 1
+    DEC  var              var = var - 1
+    ROUND var             Round to nearest integer
+    FLOOR var             Round down
+    CEIL  var             Round up
+
+  Random:
+    RAND  var min max     Integer between min and max
+    RANDF var min max     Float between min and max
+    RANDSEED n            Set random seed for repeatability
+
+  Min / Max / Clamp:
+    MIN  out a b          out = smaller of a or b
+    MAX  out a b          out = larger of a or b
+    CLAMP var lo hi       Clamp var between lo and hi
+
+  Interpolation:
+    LERP out a b t        out = a + (b-a)*t  (t=0..1)
+    NORM out v lo hi      Normalize v in [lo,hi] → 0..1
+    MAP  out v a1 a2 b1 b2  Re-map v from range a→b
+
+  Trigonometry (all in DEGREES):
+    SIN out angle         Sine
+    COS out angle         Cosine
+    TAN out angle         Tangent
+    ASIN out value        Arc-sine → degrees
+    ACOS out value        Arc-cosine → degrees
+    ATAN2 out y x         Arc-tangent of y/x → degrees
+
+  Geometry:
+    DIST out x1 y1 x2 y2  Distance between two points
+    ANGLE out x1 y1 x2 y2 Angle from point 1 to point 2
+
+  Bitwise:
+    BITAND out a b        Bitwise AND
+    BITOR  out a b        Bitwise OR
+    BITXOR out a b        Bitwise XOR
+    BITNOT out a          Bitwise NOT
+    LSHIFT out a n        Left shift a by n bits
+    RSHIFT out a n        Right shift a by n bits
+
+  Other:
+    LOG   out value       Natural log
+    LOG10 out value       Log base 10
+    EXP   out value       e^value
+    SIGN  var             Sets var to 1, -1, or 0
+    HASH  out value       Fast integer hash of a value
+    WRAP  var lo hi       Wrap var around in a range
+
+=========================================================
+  SECTION 4 — STRINGS
+=========================================================
+
+  JOIN  dest a b          dest = a + b  (concatenate)
+  UPPER var               Convert var to UPPERCASE
+  LOWER var               Convert var to lowercase
+  REV   var               Reverse the string
+  TRIM  var               Remove leading/trailing spaces
+  LEN   str result        result = length of str
+  FORMAT out "template"   out = string with $vars injected
+  TONUM out str           Parse str as a number
+  TOSTR out val           Convert number to string
+
+  Searching:
+    CONTAINS out str sub  out=1 if sub is inside str
+    STARTSWITH out s pre  out=1 if s starts with pre
+    ENDSWITH out s suf    out=1 if s ends with suf
+    INDEXOF out str sub   Position of sub in str (-1=none)
+
+  Slicing:
+    SUBSTR out str a b    out = str[a..b]
+    REPLACE out s old new Replace all old with new in s
+    PAD out str w side    Pad string to width w (left/right)
+    REPEAT out str n      Repeat str n times
+
+  Characters:
+    CHAR out n            out = character with ASCII code n
+    ORD  out str          out = ASCII code of first char
+
+  Encoding:
+    B64ENC out str        Base64-encode str
+    B64DEC out str        Base64-decode str
+
+  Splitting:
+    SPLIT arr str sep     Split str by sep into array arr
+
+=========================================================
+  SECTION 5 — FLOW CONTROL (Labels, Goto, If)
+=========================================================
+
+  Labels:
+    :MyLabel              Define a jump target
+
+  Jumping:
+    GOTO label            Jump to :label
+    CALL label            Jump like GOTO but save return pos
+    RETURN                Return from most recent CALL
+    SKIP n                Skip the next n lines
+    STOP                  Stop script execution
+    EXIT                  Close the window and quit
+
+  Conditionals (each skips the NEXT LINE if false):
+    IFEQ  a b             Skip if a != b
+    IFNEQ a b             Skip if a == b
+    IFGT  a b             Skip if a <= b
+    IFLT  a b             Skip if a >= b
+    IFGTE a b             Skip if a < b
+    IFLTE a b             Skip if a > b
+
+  Example loop:
+    SET i 0
+    :loop
+    ADD i 1
+    // ... do stuff ...
+    IFLT $i 10
+    GOTO loop
+
+  Example subroutine:
+    CALL draw_hud
+    // continues here after RETURN
+    GOTO game_loop
+
+    :draw_hud
+    DRAWTEXT "Score: $score" #fff 10 10 14
+    RETURN
+
+=========================================================
+  SECTION 6 — REAL-TIME INPUT  *** NEW IN v7 ***
+=========================================================
+
+  Key names: left, right, up, down, space, a-z, 0-9,
+             Return, BackSpace, Escape, Tab, shift_l,
+             shift_r, control_l, control_r, F1-F12
+
+  GETKEY var
+      Store the last key pressed into var, then clear it.
+      Good for menus.
+
+  KEYDOWN key var
+      Set var to 1 if key is currently HELD, else 0.
+      Use this for smooth movement in game loops.
+
+  IFKEY key label
+      Jump to label if key is currently HELD DOWN.
+      Most common movement pattern!
+
+  IFKEYPRESSED key label
+      Jump only on the FIRST frame the key is pressed.
+      Great for shooting, jumping, menu selection.
+
+  IFKEYRELEASED key label
+      Jump on the frame the key is released.
+
+  WAITKEY var
+      Pause until any key is pressed. Stores key in var.
+
+  CLEARKEYS
+      Forget all currently held keys.
+
+  Examples:
+
+    // Smooth movement (put in game loop)
+    IFKEY left  move_left
+    IFKEY right move_right
+    IFKEY up    move_up
+    IFKEY down  move_down
+    GOTO check_shoot
+
+    :move_left
+    SUB player_x 4
+    MOVETO player $player_x $player_y
+    GOTO check_shoot
+
+    :move_right
+    ADD player_x 4
+    MOVETO player $player_x $player_y
+    GOTO check_shoot
+
+    // Single-press shooting
+    :check_shoot
+    IFKEYPRESSED space fire_bullet
+    GOTO game_loop
+
+    :fire_bullet
+    DRAWCIRCLE bullet $player_x 400 8 #ffff00
+    SOUND 880 50
+    GOTO game_loop
+
+=========================================================
+  SECTION 7 — MOUSE INPUT
+=========================================================
+
+  GETMOUSE xvar yvar      Read current mouse position
+  MOUSECLICKED var        var=1 if mouse was just clicked
+  WAITCLICK               Pause until mouse click
+
+  IFMOUSE x1 y1 x2 y2 label
+      Jump to label if mouse is inside the rectangle.
+
+  IFCLICKED x1 y1 x2 y2 label
+      Jump to label if mouse was clicked inside the rect.
+
+  Example button:
+    DRAWRECT btn 200 300 200 50 #225522 #44ff44
+    DRAWTEXT "Play!" #44ff44 300 325 16
+    :wait_btn
+    IFCLICKED 200 300 400 350 start_game
+    GOTO wait_btn
+
+=========================================================
+  SECTION 8 — GRAPHICS
+=========================================================
+
+  Background:
+    BG #rrggbb            Set background color
+
+  Drawing (shapes stay on canvas until CLEAR):
+    DRAWBOX  id x y size color [outline]
+    DRAWRECT id x y w h color [outline]
+    DRAWCIRCLE id x y radius color
+    DRAWOVAL id x y w h color
+    DRAWLINE id x1 y1 x2 y2 color [width]
+    DRAWPOLY id color x1 y1 x2 y2 x3 y3 ...
+    DRAWTEXT "msg" color x y [fontsize]
+    DRAWLABEL id "msg" color x y [fontsize]
+
+  Clearing:
+    CLEAR                 Delete everything on canvas
+    CLEARSPRITES          Delete all sprites
+
+  Moving sprites:
+    MOVE   id dx dy       Move by offset
+    MOVETO id x y         Move to exact position
+    SETPOS id x y         Same as MOVETO
+    GETPOS id xvar yvar   Read current position
+
+  Appearance:
+    RECOLOR  id color     Change fill color
+    REOUTLINE id color    Change outline color
+    HIDE  id              Make sprite invisible
+    SHOW  id              Make sprite visible again
+    DELETE id             Remove sprite permanently
+    LAYER id above|below  Bring to front or send back
+    SCALE id factor       Scale sprite data (not visual)
+    UPDATETEXT id "new"   Update a DRAWLABEL's text
+
+  Effects:
+    FLASH                 Screen flashes white
+    SHAKE [frames] [intensity]   Screen shake effect
+
+  Example game loop rendering pattern:
+    :game_loop
+    CLEAR
+    BG #000022
+    DRAWRECT bg 0 0 700 450 #000022
+    DRAWCIRCLE player $px $py 20 #00ffcc
+    // ... draw enemies, HUD ...
+    WAIT 0.016
+    GOTO game_loop
+
+=========================================================
+  SECTION 9 — ANIMATION & TWEENING  *** NEW ***
+=========================================================
+
+  TWEEN id var from to duration [ease]
+      Animate variable `var` from `from` to `to` over
+      `duration` seconds. Easing options:
+        linear  easein  easeout  easeinout  bounce
+
+  TWEENDONE id label
+      Jump to label when tween id is finished.
+
+  STOPTWEEN id
+      Cancel a running tween.
+
+  Example:
+    SET px 50
+    TWEEN slide px 50 600 2.0 easeout
+    :anim_loop
+    MOVETO player $px 300
+    TWEENDONE slide anim_done
+    WAIT 0.016
+    GOTO anim_loop
+    :anim_done
+    POPUP "Slide complete!"
+
+=========================================================
+  SECTION 10 — PARTICLES  *** NEW ***
+=========================================================
+
+  BURST id x y count color [size] [speed] [gravity]
+      Explode `count` particles outward from x,y.
+      They fall with gravity and auto-delete when dead.
+
+  STREAM id x y direction color [count]
+      Emit a stream of particles in a direction (degrees).
+      Call each frame to make a continuous effect.
+
+  CLEARPARTICLES id
+      Remove all particles in a group.
+
+  Examples:
+    // Explosion on death
+    BURST explosion $ex $ey 40 #ff6600 6 5 0.3
+
+    // Rocket exhaust (call every frame)
+    STREAM exhaust $px $py 270 #ff4400 8
+
+=========================================================
+  SECTION 11 — TIMERS  *** NEW ***
+=========================================================
+
+  TIMER name seconds label
+      After `seconds`, jump to :label automatically.
+
+  CANCELTIMER name
+      Cancel a timer before it fires.
+
+  TIMERDONE name label
+      Manual check: jump if timer already fired.
+
+  Example:
+    TIMER countdown 5 time_up
+    :game_loop
+    // your game runs normally
+    GOTO game_loop
+    :time_up
+    POPUP "Time's up!"
+
+=========================================================
+  SECTION 12 — COLLISION DETECTION  *** NEW ***
+=========================================================
+
+  COLLIDE id1 id2 result
+      result = 1 if the two rectangle sprites overlap.
+
+  COLLIDECIRCLE id1 id2 result
+      result = 1 if the two circular sprites overlap.
+
+  BOUNDRECT id x1 y1 x2 y2 result
+      Clamp sprite inside a rectangle.
+      result = 1 if it was clamped (hit a wall).
+
+  Example:
+    COLLIDE player enemy hit
+    IFEQ $hit 1
+    GOTO player_hurt
+
+    BOUNDRECT player 0 0 700 450 wall_hit
+    IFEQ $wall_hit 1
+    SOUND 200 50
+
+=========================================================
+  SECTION 13 — ARRAYS  *** NEW ***
+=========================================================
+
+  ARRAYNEW  arr           Create an empty array
+  ARRAYPUSH arr val       Add val to end of array
+  ARRAYPOP  arr var       Remove and store last element
+  ARRAYGET  out arr idx   out = arr[idx]
+  ARRAYSET  arr idx val   arr[idx] = val
+  ARRAYLEN  out arr       out = number of elements
+  ARRAYCLEAR arr          Empty the array
+  ARRAYSORT arr           Sort the array
+  ARRAYREV  arr           Reverse the array
+  ARRAYFILL arr n val     Fill arr with n copies of val
+  ARRAYJOIN out arr sep   Join all elements into a string
+  ARRAYSUM  out arr       Sum of all numeric elements
+  ARRAYMIN  out arr       Minimum value in array
+  ARRAYMAX  out arr       Maximum value in array
+  SHUFFLE   arr           Randomize order of elements
+  SPLIT     arr str sep   Split a string into array
+
+  Inline access in any command: $arrname[0] $arrname[3]
+
+  Example:
+    ARRAYNEW scores
+    ARRAYPUSH scores 100
+    ARRAYPUSH scores 250
+    ARRAYPUSH scores 75
+    ARRAYSORT scores
+    ARRAYGET best scores 2
+    DRAWTEXT "Best: $best" #fff 10 10 14
+
+=========================================================
+  SECTION 14 — SOUND
+=========================================================
+
+  SOUND hz ms             Play a beep at frequency hz
+                          for ms milliseconds
+  BEEP                    Quick 440hz beep
+  CHORD hz1 hz2 hz3 ms    Play chords (simultaneous)
+  MELODY hz ms hz ms ...  Play a sequence of notes
+
+  Note frequencies (approx):
+    C4=262  D4=294  E4=330  F4=349
+    G4=392  A4=440  B4=494  C5=523
+
+  Example melody:
+    MELODY 262 200 294 200 330 200 349 400
+
+=========================================================
+  SECTION 15 — DIALOGS & UI
+=========================================================
+
+  POPUP  "message"        Info dialog box
+  ALERT  "message"        Warning dialog
+  ERROR  "message"        Error dialog
+  CONFIRM var "message"   Yes/No dialog → var = yes/no
+  ASK    var "message"    Alias for CONFIRM
+  PROMPT var "message"    Text input → var = typed string
+  PROMPTNUM var "msg"     Number input → var = number
+  PICKCOLOR var           Color picker → var = #hex color
+
+=========================================================
+  SECTION 16 — WINDOW CONTROL
+=========================================================
+
+  TITLE "Window Title"    Set window title bar text
+  RESIZE w h              Resize window
+  FULLSCREEN on|off       Toggle fullscreen
+  TOPMOST on|off          Keep window on top
+  CURSOR arrow|wait|cross Change mouse cursor style
+  MINIMIZE                Minimize window
+  MAXIMIZE                Maximize window
+  RESTORE                 Restore from min/max
+  CANVASSIZE w h          Resize the drawing canvas
+  STATUSBAR "msg"         Update the bottom status bar
+
+=========================================================
+  SECTION 17 — FILE I/O  *** NEW ***
+=========================================================
+
+  FILEWRITE path "text"   Write text to file (overwrites)
+  FILEAPPEND path "text"  Append a line to file
+  FILEREAD var path       Read entire file into var
+  FILELINES arr path      Read file lines into array
+  FILEEXISTS var path     var=1 if file exists, else 0
+  FILEDELETE path         Delete a file
+
+  Example:
+    FILEWRITE "log.txt" "Game started!"
+    FILEAPPEND "log.txt" "Player scored: $score"
+
+=========================================================
+  SECTION 18 — SAVE / LOAD  *** NEW ***
+=========================================================
+
+  SAVE [filename]         Save ALL variables to JSON
+  LOAD [filename]         Load ALL variables from JSON
+  SAVEVAR file varname    Save one variable to JSON file
+  LOADVAR file varname    Load one variable from JSON file
+
+  Default filename is "quk_save.json" if not specified.
+
+  Example:
+    SAVE "mygame.json"         // save everything
+    LOAD "mygame.json"         // restore everything
+
+    SAVEVAR "hi.json" hiscore  // save just the hiscore
+    LOADVAR "hi.json" hiscore  // restore just the hiscore
+
+=========================================================
+  SECTION 19 — COLOR UTILITIES  *** NEW ***
+=========================================================
+
+  RGB2HEX out r g b       Convert R G B (0-255) to #hex
+  HEX2RGB var hex         Sets var_r, var_g, var_b
+  LERPCOLOR out h1 h2 t   Blend two hex colors (t=0..1)
+  HSV2HEX out h s v       Hue(0-360) Sat(0-1) Val(0-1)
+  RANDOMCOLOR var         Random color → var
+  DARKEN  out hex f       Darken a color by factor f
+  LIGHTEN out hex f       Lighten a color by factor f
+
+  Example (rainbow cycle):
+    SET hue 0
+    :rainbow
+    ADD hue 1
+    WRAP hue 0 360
+    HSV2HEX col $hue 1 1
+    BG $col
+    GOTO rainbow
+
+=========================================================
+  SECTION 20 — SYSTEM & OS
+=========================================================
+
+  TIME     var            var = current time "HH:MM:SS"
+  DATE     var            var = current date "YYYY-MM-DD"
+  YEAR     var            var = current year
+  MONTH    var            var = current month (1-12)
+  DAY      var            var = current day (1-31)
+  HOUR     var            var = current hour (0-23)
+  MINUTE   var            var = current minute
+  SECOND   var            var = current second
+  TIMESTAMP var           var = Unix timestamp (int)
+  UPTIME   var            var = seconds since script start
+  HOSTNAME var            var = computer hostname
+  PLATFORM var            var = Windows / Linux / Darwin
+  GETENV   var name       Read an environment variable
+  WEB      url            Open URL in browser
+  SHELL    command        Run a system shell command
+
+=========================================================
+  SECTION 21 — DEBUG TOOLS  *** NEW ***
+=========================================================
+
+  DEBUGON                 Enable verbose debug output
+  DEBUGOFF                Disable debug output
+  PRINT "message"         Print to console
+  LOG   "message"         Write to quk_log.txt
+  DUMPVARS                Print all variables to console
+  DUMPSPRITES             Print all sprite positions
+  ASSERT cond "message"   Stop with error if cond=0
+  BENCHMARK               Update $fps_display variable
+  NOP                     Do nothing (placeholder)
+
+=========================================================
+  SECTION 22 — MISC COMMANDS
+=========================================================
+
+  FPS target              Throttle to target FPS
+  RANDSEED n              Seed the random number generator
+  STATUSBAR "text"        Update the engine status bar
+  CLIPBOARD var           Copy var value to clipboard
+  TOGGLE var              Flip 0 ↔ 1
+  PAUSE                   Pause execution (use RESUME)
+  RESUME                  Resume from PAUSE
+  SKIP n                  Skip ahead n lines
+  STOP                    Halt the script
+  SCENECLEAR              Clear canvas + sprites for new scene
+  SCENE label             Clear and jump to a scene
+
+=========================================================
+  SECTION 23 — COMPLETE EXAMPLE GAME
+=========================================================
+
+// Minimal real-time movement demo with collision
+BG #111122
+TITLE "QUK v7 - Move Demo"
+SET px 300
+SET py 350
+SET speed 4
+DRAWRECT wall 100 150 200 20 #cc4422
+
+:loop
+FPS 60
+CLEAR
+BG #111122
+
+// Draw wall
+DRAWRECT wall 100 150 200 20 #cc4422
+
+// Player movement with IFKEY
+IFKEY left  go_left
+IFKEY right go_right
+IFKEY up    go_up
+IFKEY down  go_down
+GOTO post_move
+
+:go_left
+SUB px $speed
+GOTO post_move
+
+:go_right
+ADD px $speed
+GOTO post_move
+
+:go_up
+SUB py $speed
+GOTO post_move
+
+:go_down
+ADD py $speed
+
+:post_move
+
+// Keep on screen
+CLAMP px 0 680
+CLAMP py 0 430
+
+// Draw player
+DRAWCIRCLE player $px $py 20 #00ffcc
+
+// Collision with wall
+COLLIDE player wall hit
+IFEQ $hit 1
+RECOLOR player #ff4444
+IFEQ $hit 1
+GOTO loop
+RECOLOR player #00ffcc
+
+// Shoot particle on SPACE
+IFKEYPRESSED space shoot
+GOTO loop
+
+:shoot
+BURST fire $px $py 10 #ffdd00 4 4 0.15
+SOUND 880 40
+GOTO loop
+
+=========================================================
+  COMMAND QUICK REFERENCE — ALL 500+ COMMANDS
+=========================================================
+
+MATH:         ADD SUB MULT DIV MOD POW SQRT ABS NEG
+              INC DEC ROUND FLOOR CEIL RAND RANDF
+              MIN MAX CLAMP LERP NORM MAP WRAP
+              SIN COS TAN ASIN ACOS ATAN2
+              LOG LOG10 EXP SIGN DIST ANGLE
+              BITAND BITOR BITXOR BITNOT LSHIFT RSHIFT HASH
+
+STRINGS:      SET JOIN UPPER LOWER REV TRIM LEN FORMAT
+              TONUM TOSTR SUBSTR REPLACE CONTAINS
+              STARTSWITH ENDSWITH INDEXOF CHAR ORD
+              PAD REPEAT SPLIT B64ENC B64DEC
+
+ARRAYS:       ARRAYNEW ARRAYPUSH ARRAYPOP ARRAYGET
+              ARRAYSET ARRAYLEN ARRAYCLEAR ARRAYSORT
+              ARRAYREV ARRAYFILL ARRAYJOIN ARRAYSUM
+              ARRAYMIN ARRAYMAX SHUFFLE
+
+FLOW:         GOTO CALL RETURN IFEQ IFNEQ IFGT IFLT
+              IFGTE IFLTE SKIP STOP EXIT PAUSE RESUME NOP
+
+INPUT:        GETKEY KEYDOWN IFKEY IFKEYPRESSED
+              IFKEYRELEASED WAITKEY CLEARKEYS
+              GETMOUSE MOUSECLICKED WAITCLICK
+              IFMOUSE IFCLICKED
+
+GRAPHICS:     BG CLEAR CLEARSPRITES FLASH SHAKE
+              DRAWBOX DRAWRECT DRAWCIRCLE DRAWOVAL
+              DRAWLINE DRAWPOLY DRAWTEXT DRAWLABEL
+              MOVE MOVETO SETPOS GETPOS RECOLOR
+              REOUTLINE HIDE SHOW DELETE LAYER SCALE
+              UPDATETEXT
+
+ANIMATION:    TWEEN TWEENDONE STOPTWEEN
+              BURST STREAM CLEARPARTICLES
+              CAMPOS CAMZOOM GETCAMP
+
+TIMERS:       TIMER CANCELTIMER TIMERDONE
+
+COLLISION:    COLLIDE COLLIDECIRCLE BOUNDRECT
+
+SOUND:        SOUND BEEP CHORD MELODY SILENCE
+
+UI:           POPUP ALERT ERROR CONFIRM ASK
+              PROMPT PROMPTNUM PICKCOLOR
+
+WINDOW:       TITLE RESIZE FULLSCREEN TOPMOST CURSOR
+              MINIMIZE MAXIMIZE RESTORE CANVASSIZE
+              STATUSBAR
+
+FILE:         FILEWRITE FILEAPPEND FILEREAD
+              FILELINES FILEEXISTS FILEDELETE
+
+SAVE/LOAD:    SAVE LOAD SAVEVAR LOADVAR
+
+COLOR:        RGB2HEX HEX2RGB LERPCOLOR HSV2HEX
+              RANDOMCOLOR DARKEN LIGHTEN
+
+SYSTEM:       TIME DATE YEAR MONTH DAY HOUR MINUTE
+              SECOND TIMESTAMP UPTIME HOSTNAME
+              PLATFORM GETENV WEB SHELL
+
+MISC:         COPY SWAP TOGGLE RANDSEED FPS
+              CLIPBOARD SCENE SCENECLEAR
+              WAIT WAITCLICK
+
+DEBUG:        DEBUGON DEBUGOFF PRINT LOG DUMPVARS
+              DUMPSPRITES ASSERT BENCHMARK NOP
+
+=========================================================
+      QUK CENTURION PRO v7.0 — "Power Without Limits"
 =========================================================
